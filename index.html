@@ -39,7 +39,7 @@
             border: 1px solid var(--border);
             backdrop-filter: blur(15px);
             width: 90%;
-            max-width: 600px;
+            max-width: 650px;
             justify-content: space-around;
         }
 
@@ -48,7 +48,7 @@
             border: none;
             color: #888;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
             cursor: pointer;
             padding: 10px 20px;
@@ -73,13 +73,13 @@
         section {
             position: absolute;
             width: 90%;
-            max-width: 1100px;
+            max-width: 1200px;
             background: var(--glass);
             border: 1px solid var(--border);
             padding: 40px;
             border-radius: 30px;
             display: none;
-            grid-template-columns: 1fr 1.2fr;
+            grid-template-columns: 1.2fr 1fr;
             gap: 40px;
             align-items: center;
             backdrop-filter: blur(10px);
@@ -87,13 +87,13 @@
 
         section.show { display: grid; }
 
-        .content-text { max-height: 65vh; overflow-y: auto; padding-right: 15px; }
+        .content-text { max-height: 65vh; overflow-y: auto; padding-right: 20px; }
 
         /* Contenedor del Slider de Imágenes */
         .img-slider {
             position: relative;
             width: 100%;
-            height: 350px;
+            height: 400px;
             overflow: hidden;
             border-radius: 20px;
             border: 1px solid var(--cyan);
@@ -116,28 +116,37 @@
             color: var(--cyan);
             margin-bottom: 20px;
             font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
         }
 
         p { line-height: 1.6; margin-bottom: 15px; font-size: 1rem; color: #ccc; }
 
         .type-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px 20px;
+            margin-bottom: 15px;
             border-radius: 12px;
             border-left: 4px solid var(--magenta);
+            transition: 0.3s;
         }
 
-        .type-card h3 { font-size: 0.9rem; color: #fff; margin-bottom: 5px; }
+        .type-card:hover {
+            background: rgba(255, 0, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .type-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #fff; margin-bottom: 8px; letter-spacing: 1px; }
+        .type-card p { margin-bottom: 0; font-size: 0.95rem; }
 
         /* Scrollbar Custom */
-        .content-text::-webkit-scrollbar { width: 4px; }
-        .content-text::-webkit-scrollbar-thumb { background: var(--cyan); }
+        .content-text::-webkit-scrollbar { width: 6px; }
+        .content-text::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+        .content-text::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
 
         @media (max-width: 900px) {
             section { grid-template-columns: 1fr; max-height: 85vh; padding: 25px; }
             .img-slider { height: 250px; order: -1; }
-            h1 { font-size: 1.4rem; }
+            h1, h2 { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -156,14 +165,19 @@
         <section id="s1" class="show">
             <div class="content-text">
                 <h1>LA ESENCIA DE LA IA</h1>
-                <p>La IA no es programación lineal; es la capacidad de una máquina para <strong>aprender de la experiencia</strong> y adaptarse a nuevas entradas.</p>
+                <p>La IA marca el fin de la programación determinista (donde los humanos escriben reglas rígidas). Su esencia reside en el <strong>entrenamiento heurístico</strong>: la capacidad de una máquina para construir su propio modelo de la realidad a través de la experiencia y la iteración matemática.</p>
+                
                 <div class="type-card">
-                    <h3>Abstracción Pura</h3>
-                    <p>Interpretación de datos para generar conocimiento autónomo.</p>
+                    <h3>Redes Neuronales Profundas (Deep Learning)</h3>
+                    <p>Arquitecturas inspiradas en el cerebro humano con múltiples "capas ocultas". Cada capa extrae características cada vez más complejas de los datos, pasando de bordes simples a conceptos abstractos.</p>
                 </div>
                 <div class="type-card">
-                    <h3>Evolución Constante</h3>
-                    <p>Ajuste de algoritmos en tiempo real mediante redes neuronales.</p>
+                    <h3>Función de Pérdida y Retropropagación</h3>
+                    <p>El núcleo de su evolución. El sistema calcula matemáticamente qué tan equivocada fue su predicción (función de pérdida) y ajusta los pesos de sus conexiones hacia atrás (backpropagation) para no cometer el mismo error dos veces.</p>
+                </div>
+                <div class="type-card">
+                    <h3>Reconocimiento de Patrones Multidimensionales</h3>
+                    <p>Capacidad para encontrar correlaciones invisibles al intelecto humano en espacios de datos de dimensiones infinitas, permitiendo predicciones de alta precisión.</p>
                 </div>
             </div>
             <div class="img-slider" id="slider-s1">
@@ -176,14 +190,19 @@
         <section id="s2">
             <div class="content-text">
                 <h2>MECANISMOS DE COMPRENSIÓN</h2>
-                <p>¿Cómo entiende la IA el mundo? Mediante el procesamiento de <strong>Big Data</strong> y arquitecturas de cómputo avanzadas.</p>
+                <p>¿Cómo entiende la máquina un mundo para el que no fue pre-programada? Lo hace traduciendo la realidad (texto, imágenes, sonido) a vectores matemáticos procesados por hardware masivamente paralelo.</p>
+                
                 <div class="type-card">
-                    <h3>Análisis de Patrones</h3>
-                    <p>Detección de estructuras lógicas en océanos de información.</p>
+                    <h3>Procesamiento de Lenguaje Natural (PLN) y Transformers</h3>
+                    <p>Las arquitecturas Transformer revolucionaron la IA mediante el mecanismo de "Atención". En lugar de leer palabra por palabra, la IA evalúa el contexto de toda una oración simultáneamente, permitiendo una comprensión semántica casi humana.</p>
                 </div>
                 <div class="type-card">
-                    <h3>Cómputo Acelerado</h3>
-                    <p>Uso de hardware especializado para simular la lógica humana.</p>
+                    <h3>Visión Computacional</h3>
+                    <p>Los píxeles se convierten en matrices numéricas. Mediante redes convolucionales (CNNs), la IA no solo "ve" una imagen, sino que segmenta, clasifica e interpreta el contexto tridimensional de su entorno.</p>
+                </div>
+                <div class="type-card">
+                    <h3>Potencia de Cómputo (El Hardware)</h3>
+                    <p>Las Unidades de Procesamiento Tensorial (TPUs) y GPUs de última generación son el motor físico. Ejecutan billones de multiplicaciones de matrices por segundo, digiriendo el Big Data global en tiempo real.</p>
                 </div>
             </div>
             <div class="img-slider" id="slider-s2">
@@ -195,15 +214,20 @@
         <!-- SECCIÓN 03: TIPOS -->
         <section id="s3">
             <div class="content-text">
-                <h2>TIPOLOGÍAS DE IA</h2>
-                <p>Desde la IA reactiva hasta los modelos de <strong>Teoría de la Mente</strong>, el camino hacia la autoconciencia digital.</p>
+                <h2>TAXONOMÍA DIGITAL</h2>
+                <p>La evolución de la Inteligencia Artificial no es lineal, se ramifica en distintas capacidades cognitivas. Clasificamos estos sistemas según su nivel de autonomía, creatividad y comprensión del contexto temporal.</p>
+                
                 <div class="type-card">
-                    <h3>ANI y AGI</h3>
-                    <p>Diferencia entre tareas específicas e inteligencia general humana.</p>
+                    <h3>IA Estrecha (ANI) e IA Generativa</h3>
+                    <p>Sistemas actuales. Altamente especializados en un dominio (diagnóstico médico, conducción). Su subconjunto más potente hoy es la <strong>IA Generativa</strong>, capaz de sintetizar texto, código e imágenes nuevas a partir de datos latentes.</p>
                 </div>
                 <div class="type-card">
-                    <h3>Memoria Evolutiva</h3>
-                    <p>Sistemas que utilizan el pasado para predecir el futuro inmediato.</p>
+                    <h3>IA General (AGI) y Teoría de la Mente</h3>
+                    <p>El horizonte a corto plazo. Sistemas con capacidad de transferencia de conocimiento (aprender ajedrez y aplicar esa lógica a la economía). Incluye máquinas que comprenden emociones, intenciones y dinámicas sociales humanas.</p>
+                </div>
+                <div class="type-card">
+                    <h3>Superinteligencia Artificial (ASI)</h3>
+                    <p>El punto de singularidad teórica. Una inteligencia que supera el intelecto de las mentes humanas combinadas en todos los campos, desde la creatividad científica hasta la sabiduría social. Su desarrollo plantea los mayores retos éticos de la humanidad.</p>
                 </div>
             </div>
             <div class="img-slider" id="slider-s3">
