@@ -10,28 +10,22 @@
             --cyan: #00f3ff;
             --magenta: #ff00ff;
             --bg: #030308;
-            --glass: rgba(10, 10, 20, 0.85);
+            --glass: rgba(10, 10, 20, 0.9);
+            --border: rgba(0, 243, 255, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        
         body {
             background: var(--bg);
             color: #e0e0e0;
             font-family: 'Space Grotesk', sans-serif;
             height: 100vh;
             overflow: hidden;
-            cursor: crosshair;
         }
 
-        /* Fondo de partículas de red neuronal */
-        #bg-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            z-index: -1;
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
-        /* Navegación Flotante Estilo Futurista */
         nav {
             position: fixed;
             top: 20px;
@@ -42,10 +36,10 @@
             background: var(--glass);
             padding: 8px;
             border-radius: 100px;
-            border: 1px solid rgba(0, 243, 255, 0.3);
+            border: 1px solid var(--border);
             backdrop-filter: blur(15px);
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             justify-content: space-around;
         }
 
@@ -54,10 +48,10 @@
             border: none;
             color: #888;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 700;
             cursor: pointer;
-            padding: 10px 15px;
+            padding: 10px 20px;
             transition: 0.4s;
             border-radius: 50px;
             text-transform: uppercase;
@@ -66,82 +60,90 @@
         nav button.active {
             color: var(--cyan);
             background: rgba(0, 243, 255, 0.1);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
         }
 
-        /* Contenedor Principal */
         main {
-            position: relative;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
         section {
             position: absolute;
-            width: 100%;
-            max-width: 600px;
+            width: 90%;
+            max-width: 1100px;
             background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
             padding: 40px;
             border-radius: 30px;
-            display: none; /* Se maneja por JS */
-            opacity: 1;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            max-height: 80vh;
-            overflow-y: auto;
+            display: none;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: center;
+            backdrop-filter: blur(10px);
         }
 
-        section.show { display: block; }
+        section.show { display: grid; }
+
+        .content-text { max-height: 65vh; overflow-y: auto; padding-right: 15px; }
+
+        /* Contenedor del Slider de Imágenes */
+        .img-slider {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid var(--cyan);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+        }
+
+        .img-slider img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .img-slider img.active { opacity: 1; }
 
         h1, h2 {
             font-family: 'Orbitron', sans-serif;
             color: var(--cyan);
             margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-align: center;
+            font-size: 1.8rem;
         }
 
-        p { line-height: 1.7; margin-bottom: 15px; font-size: 1rem; color: #ccc; }
+        p { line-height: 1.6; margin-bottom: 15px; font-size: 1rem; color: #ccc; }
 
-        .highlight { color: var(--magenta); font-weight: bold; }
-
-        /* Estilo para los tipos de IA */
         .type-card {
-            border-left: 3px solid var(--magenta);
-            background: rgba(255, 0, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             padding: 15px;
-            margin-top: 15px;
-            border-radius: 0 15px 15px 0;
+            margin-top: 10px;
+            border-radius: 12px;
+            border-left: 4px solid var(--magenta);
         }
 
-        .type-card h3 { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #fff; margin-bottom: 5px; }
+        .type-card h3 { font-size: 0.9rem; color: #fff; margin-bottom: 5px; }
 
-        /* Canvas para el efecto de pulverización */
-        #snap-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            pointer-events: none;
-            z-index: 999;
-        }
+        /* Scrollbar Custom */
+        .content-text::-webkit-scrollbar { width: 4px; }
+        .content-text::-webkit-scrollbar-thumb { background: var(--cyan); }
 
-        /* Scrollbar personalizada */
-        section::-webkit-scrollbar { width: 5px; }
-        section::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
-
-        @media (max-width: 768px) {
-            section { padding: 25px; width: 95%; }
-            h1 { font-size: 1.5rem; }
-            nav button { font-size: 0.55rem; padding: 8px 10px; }
+        @media (max-width: 900px) {
+            section { grid-template-columns: 1fr; max-height: 85vh; padding: 25px; }
+            .img-slider { height: 250px; order: -1; }
+            h1 { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
     <canvas id="bg-canvas"></canvas>
-    <canvas id="snap-canvas"></canvas>
 
     <nav>
         <button onclick="changeSection('s1')" id="btn-s1" class="active">01. Esencia</button>
@@ -150,52 +152,69 @@
     </nav>
 
     <main>
+        <!-- SECCIÓN 01: ESENCIA -->
         <section id="s1" class="show">
-            <h1>LA ESENCIA DE LA IA</h1>
-            <p>La <span class="highlight">Inteligencia Artificial</span> no es un software convencional. Es un cambio de paradigma donde las máquinas dejan de seguir instrucciones paso a paso para empezar a <strong>reconocer patrones</strong>.</p>
-            <p>En su núcleo, la IA es la capacidad de un sistema para interpretar datos externos, aprender de ellos y emplear esos conocimientos para lograr tareas específicas mediante una adaptación flexible.</p>
-            <p>Desde algoritmos de búsqueda hasta redes neuronales profundas, la IA busca replicar —y a menudo superar— la resolución de problemas humana.</p>
+            <div class="content-text">
+                <h1>LA ESENCIA DE LA IA</h1>
+                <p>La IA no es programación lineal; es la capacidad de una máquina para <strong>aprender de la experiencia</strong> y adaptarse a nuevas entradas.</p>
+                <div class="type-card">
+                    <h3>Abstracción Pura</h3>
+                    <p>Interpretación de datos para generar conocimiento autónomo.</p>
+                </div>
+                <div class="type-card">
+                    <h3>Evolución Constante</h3>
+                    <p>Ajuste de algoritmos en tiempo real mediante redes neuronales.</p>
+                </div>
+            </div>
+            <div class="img-slider" id="slider-s1">
+                <img src="https://i.ibb.co/q33MHXDs/Gemini-Generated-Image-m387z4m387z4m387.png" class="active" alt="Esencia 1">
+                <img src="https://i.ibb.co/DgP30xc5/Gemini-Generated-Image-pp63phpp63phpp63.png" alt="Esencia 2">
+            </div>
         </section>
 
+        <!-- SECCIÓN 02: COMPRENSIÓN -->
         <section id="s2">
-            <h2>COMPRENDER EL MECANISMO</h2>
-            <p>Entender la IA requiere mirar bajo el capó. No es "magia", es <span class="highlight">Matemática Multidimensional</span>.</p>
-            <p>Se basa en tres pilares fundamentales:</p>
-            <div class="type-card">
-                <h3>1. Big Data</h3>
-                <p>El combustible. Sin millones de datos, la IA no tiene de dónde extraer patrones.</p>
+            <div class="content-text">
+                <h2>MECANISMOS DE COMPRENSIÓN</h2>
+                <p>¿Cómo entiende la IA el mundo? Mediante el procesamiento de <strong>Big Data</strong> y arquitecturas de cómputo avanzadas.</p>
+                <div class="type-card">
+                    <h3>Análisis de Patrones</h3>
+                    <p>Detección de estructuras lógicas en océanos de información.</p>
+                </div>
+                <div class="type-card">
+                    <h3>Cómputo Acelerado</h3>
+                    <p>Uso de hardware especializado para simular la lógica humana.</p>
+                </div>
             </div>
-            <div class="type-card">
-                <h3>2. Algoritmos de Aprendizaje</h3>
-                <p>El motor. Modelos matemáticos que se ajustan a sí mismos para reducir el margen de error.</p>
-            </div>
-            <div class="type-card">
-                <h3>3. Capacidad de Cómputo</h3>
-                <p>El hardware. Procesadores (GPUs/TPUs) que realizan billones de cálculos por segundo.</p>
+            <div class="img-slider" id="slider-s2">
+                <img src="https://i.ibb.co/rVHL73v/Gemini-Generated-Image-dbm8aldbm8aldbm8.png" class="active" alt="Comprensión 1">
+                <img src="https://i.ibb.co/fRzxd71/Gemini-Generated-Image-lt5t4flt5t4flt5t.png" alt="Comprensión 2">
             </div>
         </section>
 
+        <!-- SECCIÓN 03: TIPOS -->
         <section id="s3">
-            <h2>TAXONOMÍA DE LA IA</h2>
-            <p>La IA se divide según su alcance y su evolución filosófica:</p>
-            
-            <div class="type-card">
-                <h3>IA Estrecha (ANI)</h3>
-                <p>Sistemas "débiles" diseñados para una sola cosa: jugar ajedrez, traducir textos o diagnosticar tumores.</p>
+            <div class="content-text">
+                <h2>TIPOLOGÍAS DE IA</h2>
+                <p>Desde la IA reactiva hasta los modelos de <strong>Teoría de la Mente</strong>, el camino hacia la autoconciencia digital.</p>
+                <div class="type-card">
+                    <h3>ANI y AGI</h3>
+                    <p>Diferencia entre tareas específicas e inteligencia general humana.</p>
+                </div>
+                <div class="type-card">
+                    <h3>Memoria Evolutiva</h3>
+                    <p>Sistemas que utilizan el pasado para predecir el futuro inmediato.</p>
+                </div>
             </div>
-            <div class="type-card">
-                <h3>IA General (AGI)</h3>
-                <p>La IA teórica que puede realizar cualquier tarea intelectual humana. Posee autoconciencia y sentido común.</p>
-            </div>
-            <div class="type-card">
-                <h3>Sistemas de Memoria Limitada</h3>
-                <p>Aquellos que miran al pasado inmediato para tomar decisiones en tiempo real, como los coches autónomos de 2026.</p>
+            <div class="img-slider" id="slider-s3">
+                <img src="https://i.ibb.co/0yYWJ60g/Gemini-Generated-Image-9q14sq9q14sq9q14.png" class="active" alt="Tipos 1">
+                <img src="https://i.ibb.co/XGzsK1Y/Gemini-Generated-Image-xat41xxat41xxat4.png" alt="Tipos 2">
             </div>
         </section>
     </main>
 
     <script>
-        /** BACKGROUND ANIMATION **/
+        // --- Red Neuronal Background ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -211,41 +230,34 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
             }
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
+                this.x += this.vx; this.y += this.vy;
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
             draw() {
-                ctx.fillStyle = '#00f3ff';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 1, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.fillStyle = 'rgba(0, 243, 255, 0.4)';
+                ctx.beginPath(); ctx.arc(this.x, this.y, 1.2, 0, Math.PI * 2); ctx.fill();
             }
         }
 
-        for (let i = 0; i < 80; i++) particles.push(new Particle());
+        for (let i = 0; i < 70; i++) particles.push(new Particle());
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach((p, i) => {
-                p.update();
-                p.draw();
+                p.update(); p.draw();
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = p.x - particles[j].x;
                     const dy = p.y - particles[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist / 150})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
+                    if (dist < 130) {
+                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist / 130})`;
+                        ctx.lineWidth = 0.4;
+                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
                     }
                 }
             });
@@ -253,43 +265,47 @@
         }
         animate();
 
-        /** THANOS DISINTEGRATION EFFECT **/
-        let isAnimating = false;
+        // --- Lógica del Slider de Imágenes ---
+        function startSliders() {
+            const sliders = document.querySelectorAll('.img-slider');
+            sliders.forEach(slider => {
+                const imgs = slider.querySelectorAll('img');
+                let currentImg = 0;
+                setInterval(() => {
+                    imgs[currentImg].classList.remove('active');
+                    currentImg = (currentImg + 1) % imgs.length;
+                    imgs[currentImg].classList.add('active');
+                }, 4000); // Cambia cada 4 segundos
+            });
+        }
+        startSliders();
 
+        // --- Transición de Secciones ---
+        let isAnimating = false;
         async function changeSection(targetId) {
             if (isAnimating) return;
             const current = document.querySelector('section.show');
             const target = document.getElementById(targetId);
-            
             if (current.id === targetId) return;
-            
-            isAnimating = true;
 
-            // Actualizar Nav
+            isAnimating = true;
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
             document.getElementById('btn-' + targetId).classList.add('active');
 
-            // Simular desintegración (Efecto visual de partículas saliendo)
-            current.style.transition = "opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease";
-            current.style.filter = "blur(10px) brightness(2)";
-            current.style.transform = "scale(1.1) translateY(-20px)";
+            current.style.transition = "all 0.5s ease";
             current.style.opacity = "0";
+            current.style.transform = "scale(0.95)";
 
             setTimeout(() => {
                 current.classList.remove('show');
-                current.style = ""; // Reset estilos
-                
                 target.classList.add('show');
                 target.style.opacity = "0";
-                target.style.transform = "scale(0.9)";
-                
-                // Forzar reflujo
-                target.offsetHeight;
+                target.style.transform = "scale(1.05)";
+                target.offsetHeight; 
 
-                target.style.transition = "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+                target.style.transition = "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)";
                 target.style.opacity = "1";
                 target.style.transform = "scale(1)";
-                
                 isAnimating = false;
             }, 500);
         }
