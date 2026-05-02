@@ -2,88 +2,76 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PhotoMath Core - Advanced AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Space+Mono&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA: El Cénit Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #fb4d3d;
-            --bg: #050507;
-            --glass: rgba(15, 15, 20, 0.9);
-            --neon: 0 0 20px rgba(251, 77, 61, 0.6);
+            --cyan: #00f3ff;
+            --magenta: #ff00ff;
+            --bg: #030308;
+            --glass: rgba(10, 10, 20, 0.85);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: var(--bg);
-            color: #fff;
-            font-family: 'Space Mono', monospace;
+            color: #e0e0e0;
+            font-family: 'Space Grotesk', sans-serif;
             height: 100vh;
-            width: 100vw;
             overflow: hidden;
-            position: relative;
+            cursor: crosshair;
         }
 
-        /* Canvas para el fondo y las partículas */
-        #master-canvas {
+        /* Fondo de partículas de red neuronal */
+        #bg-canvas {
             position: fixed;
             top: 0; left: 0;
-            z-index: 1;
-            pointer-events: none;
+            z-index: -1;
         }
 
-        /* Interfaz de Escaneo (HUD) */
-        .hud-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border: 2px solid rgba(251, 77, 61, 0.1);
-            z-index: 2;
-            pointer-events: none;
-        }
-        .scanner-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            top: 0;
-            animation: scan 4s linear infinite;
-        }
-
-        /* Navegación App-Style */
+        /* Navegación Flotante Estilo Futurista */
         nav {
             position: fixed;
-            bottom: 30px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 100;
-            background: var(--glass);
-            border: 1px solid var(--accent);
-            border-radius: 20px;
+            z-index: 1000;
             display: flex;
-            padding: 5px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--neon);
+            background: var(--glass);
+            padding: 8px;
+            border-radius: 100px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            backdrop-filter: blur(15px);
+            width: 90%;
+            max-width: 500px;
+            justify-content: space-around;
         }
 
         nav button {
             background: none;
             border: none;
-            color: #666;
+            color: #888;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.6rem;
-            padding: 12px 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            padding: 10px 15px;
+            transition: 0.4s;
+            border-radius: 50px;
             text-transform: uppercase;
         }
 
-        nav button.active { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+        nav button.active {
+            color: var(--cyan);
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        }
 
-        /* Contenedor de Contenido */
+        /* Contenedor Principal */
         main {
             position: relative;
-            z-index: 10;
             height: 100vh;
             display: flex;
             align-items: center;
@@ -91,206 +79,219 @@
             padding: 20px;
         }
 
-        .content-card {
+        section {
+            position: absolute;
+            width: 100%;
+            max-width: 600px;
             background: var(--glass);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 25px;
-            max-width: 500px;
-            width: 100%;
-            display: none;
-            position: relative;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            padding: 40px;
+            border-radius: 30px;
+            display: none; /* Se maneja por JS */
+            opacity: 1;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
-        .content-card.active { display: block; animation: zoomIn 0.4s ease-out; }
-
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.8); filter: blur(10px); }
-            to { opacity: 1; transform: scale(1); filter: blur(0); }
-        }
+        section.show { display: block; }
 
         h1, h2 {
             font-family: 'Orbitron', sans-serif;
-            color: var(--accent);
+            color: var(--cyan);
             margin-bottom: 20px;
-            font-weight: 900;
-            font-size: 1.4rem;
+            letter-spacing: 2px;
             text-align: center;
         }
 
-        p { font-size: 0.85rem; line-height: 1.6; color: #bbb; margin-bottom: 15px; }
+        p { line-height: 1.7; margin-bottom: 15px; font-size: 1rem; color: #ccc; }
 
-        .tech-tag {
-            display: inline-block;
-            background: rgba(251, 77, 61, 0.1);
-            color: var(--accent);
-            padding: 4px 10px;
-            border-radius: 5px;
-            font-size: 0.7rem;
-            margin: 5px;
-            border: 1px solid rgba(251, 77, 61, 0.3);
+        .highlight { color: var(--magenta); font-weight: bold; }
+
+        /* Estilo para los tipos de IA */
+        .type-card {
+            border-left: 3px solid var(--magenta);
+            background: rgba(255, 0, 255, 0.03);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 15px 15px 0;
         }
 
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
+        .type-card h3 { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #fff; margin-bottom: 5px; }
+
+        /* Canvas para el efecto de pulverización */
+        #snap-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 999;
         }
 
-        /* Estilo móvil */
-        @media (max-width: 480px) {
-            .content-card { padding: 20px; }
-            h1 { font-size: 1.1rem; }
-            nav { width: 90%; justify-content: space-between; }
-            nav button { padding: 10px; font-size: 0.5rem; }
+        /* Scrollbar personalizada */
+        section::-webkit-scrollbar { width: 5px; }
+        section::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+
+        @media (max-width: 768px) {
+            section { padding: 25px; width: 95%; }
+            h1 { font-size: 1.5rem; }
+            nav button { font-size: 0.55rem; padding: 8px 10px; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="master-canvas"></canvas>
-    
-    <div class="hud-overlay">
-        <div class="scanner-line"></div>
-    </div>
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="snap-canvas"></canvas>
 
     <nav>
-        <button onclick="snapTo('scan')" id="nav-scan" class="active">Escaneo</button>
-        <button onclick="snapTo('engine')" id="nav-engine">Algoritmo</button>
-        <button onclick="snapTo('future')" id="nav-future">Futuro</button>
+        <button onclick="changeSection('s1')" id="btn-s1" class="active">01. Esencia</button>
+        <button onclick="changeSection('s2')" id="btn-s2">02. Comprensión</button>
+        <button onclick="changeSection('s3')" id="btn-s3">03. Tipos</button>
     </nav>
 
-    <main id="container">
-        <section id="scan" class="content-card active">
-            <h1>SISTEMA DE VISIÓN</h1>
-            <p>PhotoMath utiliza <strong>Deep Learning</strong> para procesar la entrada de la cámara en tiempo real. No solo lee texto, interpreta la caligrafía mediante:</p>
-            <span class="tech-tag">CNN Networks</span>
-            <span class="tech-tag">OCR avanzado</span>
-            <span class="tech-tag">TensorFlow Lite</span>
-            <p style="margin-top:15px;">El sistema separa el ruido del fondo, identifica los operadores matemáticos y digitaliza la ecuación en una estructura de árbol binario.</p>
+    <main>
+        <section id="s1" class="show">
+            <h1>LA ESENCIA DE LA IA</h1>
+            <p>La <span class="highlight">Inteligencia Artificial</span> no es un software convencional. Es un cambio de paradigma donde las máquinas dejan de seguir instrucciones paso a paso para empezar a <strong>reconocer patrones</strong>.</p>
+            <p>En su núcleo, la IA es la capacidad de un sistema para interpretar datos externos, aprender de ellos y emplear esos conocimientos para lograr tareas específicas mediante una adaptación flexible.</p>
+            <p>Desde algoritmos de búsqueda hasta redes neuronales profundas, la IA busca replicar —y a menudo superar— la resolución de problemas humana.</p>
         </section>
 
-        <section id="engine" class="content-card">
-            <h2>CÓMPUTO SIMBÓLICO</h2>
-            <p>Una vez digitalizada, la IA no "adivina" el resultado. Utiliza un <strong>Sistema de Álgebra Computacional (CAS)</strong> que aplica reglas lógicas puras.</p>
-            <p>Diferencia entre $x$ como variable y $\times$ como operador, permitiendo resolver desde aritmética básica hasta cálculo diferencial complejo.</p>
-            <div class="tech-tag">Computación Simbólica</div>
-            <div class="tech-tag">Heurística Lógica</div>
+        <section id="s2">
+            <h2>COMPRENDER EL MECANISMO</h2>
+            <p>Entender la IA requiere mirar bajo el capó. No es "magia", es <span class="highlight">Matemática Multidimensional</span>.</p>
+            <p>Se basa en tres pilares fundamentales:</p>
+            <div class="type-card">
+                <h3>1. Big Data</h3>
+                <p>El combustible. Sin millones de datos, la IA no tiene de dónde extraer patrones.</p>
+            </div>
+            <div class="type-card">
+                <h3>2. Algoritmos de Aprendizaje</h3>
+                <p>El motor. Modelos matemáticos que se ajustan a sí mismos para reducir el margen de error.</p>
+            </div>
+            <div class="type-card">
+                <h3>3. Capacidad de Cómputo</h3>
+                <p>El hardware. Procesadores (GPUs/TPUs) que realizan billones de cálculos por segundo.</p>
+            </div>
         </section>
 
-        <section id="future" class="content-card">
-            <h2>EDUCACIÓN ADAPTATIVA</h2>
-            <p>El objetivo final es la <strong>Explicabilidad</strong>. La IA desglosa la solución en pasos atómicos para que el usuario aprenda la metodología, no solo el resultado.</p>
-            <p>En 2026, la IA predice en qué paso el estudiante se confundirá basándose en patrones de errores previos.</p>
-            <div class="tech-tag">Predictive Learning</div>
-            <div class="tech-tag">Step-by-Step AI</div>
+        <section id="s3">
+            <h2>TAXONOMÍA DE LA IA</h2>
+            <p>La IA se divide según su alcance y su evolución filosófica:</p>
+            
+            <div class="type-card">
+                <h3>IA Estrecha (ANI)</h3>
+                <p>Sistemas "débiles" diseñados para una sola cosa: jugar ajedrez, traducir textos o diagnosticar tumores.</p>
+            </div>
+            <div class="type-card">
+                <h3>IA General (AGI)</h3>
+                <p>La IA teórica que puede realizar cualquier tarea intelectual humana. Posee autoconciencia y sentido común.</p>
+            </div>
+            <div class="type-card">
+                <h3>Sistemas de Memoria Limitada</h3>
+                <p>Aquellos que miran al pasado inmediato para tomar decisiones en tiempo real, como los coches autónomos de 2026.</p>
+            </div>
         </section>
     </main>
 
     <script>
-        const canvas = document.getElementById('master-canvas');
+        /** BACKGROUND ANIMATION **/
+        const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        let width, height;
         let particles = [];
-        const mathSymbols = ['∫', '∑', '√', 'π', '∞', '∆', 'λ', 'θ', 'x', 'y', '+', '÷'];
 
         function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
         window.addEventListener('resize', resize);
         resize();
 
-        // Partículas del fondo (Grid matemático)
-        class GridLine {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.s = Math.random() * 2;
-                this.a = Math.random() * 0.3;
-            }
-            draw() {
-                ctx.strokeStyle = `rgba(251, 77, 61, ${this.a})`;
-                ctx.beginPath();
-                ctx.moveTo(this.x, 0);
-                ctx.lineTo(this.x, height);
-                ctx.stroke();
-                this.x += this.s;
-                if (this.x > width) this.x = 0;
-            }
-        }
-
-        // Efecto Thanos (Explosión de símbolos)
-        class Dust {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.symbol = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
-                this.size = Math.random() * 14 + 10;
-                this.vx = (Math.random() - 0.5) * 15;
-                this.vy = (Math.random() - 0.5) * 15 - 5;
-                this.alpha = 1;
-                this.gravity = 0.2;
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                this.vy += this.gravity;
-                this.alpha -= 0.02;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
             draw() {
-                ctx.fillStyle = `rgba(251, 77, 61, ${this.alpha})`;
-                ctx.font = `${this.size}px Orbitron`;
-                ctx.fillText(this.symbol, this.x, this.y);
+                ctx.fillStyle = '#00f3ff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 1, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
 
-        const grid = Array.from({length: 20}, () => new GridLine());
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
 
         function animate() {
-            ctx.fillStyle = '#050507';
-            ctx.fillRect(0, 0, width, height);
-            
-            grid.forEach(l => l.draw());
-            
-            particles = particles.filter(p => p.alpha > 0);
-            particles.forEach(p => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, i) => {
                 p.update();
                 p.draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = p.x - particles[j].x;
+                    const dy = p.y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist / 150})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
             });
-            
             requestAnimationFrame(animate);
         }
         animate();
 
-        function snapTo(sectionId) {
-            const current = document.querySelector('.content-card.active');
-            const target = document.getElementById(sectionId);
+        /** THANOS DISINTEGRATION EFFECT **/
+        let isAnimating = false;
+
+        async function changeSection(targetId) {
+            if (isAnimating) return;
+            const current = document.querySelector('section.show');
+            const target = document.getElementById(targetId);
             
-            if (current.id === sectionId) return;
+            if (current.id === targetId) return;
+            
+            isAnimating = true;
 
             // Actualizar Nav
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-            document.getElementById('nav-' + sectionId).classList.add('active');
+            document.getElementById('btn-' + targetId).classList.add('active');
 
-            // Lanzar partículas desde la posición de la card actual (Efecto Thanos)
-            const rect = current.getBoundingClientRect();
-            for(let i=0; i<60; i++) {
-                particles.push(new Dust(
-                    rect.left + Math.random() * rect.width,
-                    rect.top + Math.random() * rect.height
-                ));
-            }
+            // Simular desintegración (Efecto visual de partículas saliendo)
+            current.style.transition = "opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease";
+            current.style.filter = "blur(10px) brightness(2)";
+            current.style.transform = "scale(1.1) translateY(-20px)";
+            current.style.opacity = "0";
 
-            // Ocultar actual y mostrar siguiente
-            current.style.display = 'none';
-            current.classList.remove('active');
-            
             setTimeout(() => {
-                target.style.display = 'block';
-                target.classList.add('active');
-            }, 50);
+                current.classList.remove('show');
+                current.style = ""; // Reset estilos
+                
+                target.classList.add('show');
+                target.style.opacity = "0";
+                target.style.transform = "scale(0.9)";
+                
+                // Forzar reflujo
+                target.offsetHeight;
+
+                target.style.transition = "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+                target.style.opacity = "1";
+                target.style.transform = "scale(1)";
+                
+                isAnimating = false;
+            }, 500);
         }
     </script>
 </body>
