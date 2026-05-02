@@ -70,7 +70,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-top: 60px; /* Espacio para el nav superior */
+            padding-top: 60px;
         }
 
         section {
@@ -90,13 +90,13 @@
 
         section.show { display: grid; }
 
-        /* Estilos específicos para la Portada */
+        /* Estilos Portada Actualizados */
         #s0.show {
             display: flex;
             flex-direction: column;
             text-align: center;
             justify-content: center;
-            padding: 80px 40px;
+            padding: 60px 40px;
         }
 
         #s0 h1 {
@@ -110,11 +110,38 @@
             font-size: 1.2rem;
             color: var(--magenta);
             letter-spacing: 3px;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             text-transform: uppercase;
         }
 
-        #s0 p { max-width: 700px; margin: 0 auto 30px auto; font-size: 1.1rem; }
+        .integrantes-box {
+            background: rgba(0, 243, 255, 0.05);
+            border: 1px border var(--border);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: inline-block;
+            align-self: center;
+        }
+
+        .integrantes-box span {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .integrantes-list {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        #s0 p { max-width: 700px; margin: 0 auto 30px auto; font-size: 1rem; color: #bbb; }
 
         .btn-start {
             padding: 15px 40px;
@@ -129,6 +156,7 @@
             transition: 0.4s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            align-self: center;
         }
 
         .btn-start:hover {
@@ -162,10 +190,9 @@
         .img-slider img { opacity: 0; }
         .img-slider img.active { opacity: 1; }
         
-        /* Efecto Hover para imagen estática */
         .static-img-container:hover img { transform: scale(1.05); }
 
-        h1, h2 {
+        h2 {
             font-family: 'Orbitron', sans-serif;
             color: var(--cyan);
             margin-bottom: 20px;
@@ -189,20 +216,17 @@
             transform: translateX(5px);
         }
 
-        .type-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #fff; margin-bottom: 8px; letter-spacing: 1px; }
-        .type-card p { margin-bottom: 0; font-size: 0.95rem; }
-
-        /* Scrollbar Custom */
+        .type-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #fff; margin-bottom: 8px; }
+        
         .content-text::-webkit-scrollbar { width: 6px; }
         .content-text::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
-        .content-text::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
 
         @media (max-width: 900px) {
             section { grid-template-columns: 1fr; max-height: 80vh; padding: 25px; }
             #s0.show { padding: 40px 20px; }
-            #s0 h1 { font-size: 2.5rem; }
+            #s0 h1 { font-size: 2.2rem; }
+            .integrantes-list { font-size: 1rem; }
             .img-slider, .static-img-container { height: 250px; order: -1; }
-            h1, h2 { font-size: 1.4rem; }
             nav button { font-size: 0.65rem; padding: 8px 10px; }
         }
     </style>
@@ -220,11 +244,19 @@
     </nav>
 
     <main>
-        <!-- SECCIÓN 00: PORTADA -->
+        <!-- SECCIÓN 00: PORTADA CON INTEGRANTES -->
         <section id="s0" class="show">
             <h1>EL CÉNIT DIGITAL</h1>
-            <div class="subtitle">Explorando la Inteligencia Artificial</div>
-            <p>Bienvenido al análisis profundo del mayor salto evolutivo en la historia de la computación. Descubre cómo las máquinas han pasado de calcular a comprender, razonar y transformar la sociedad en la que vivimos.</p>
+            <div class="subtitle">Análisis de la Inteligencia Artificial</div>
+            
+            <div class="integrantes-box">
+                <span>Equipo de Investigación</span>
+                <div class="integrantes-list">
+                    Franklin • Geovanny • Dariannys • Maikelys
+                </div>
+            </div>
+
+            <p>Un viaje a través de los algoritmos que están redefiniendo la realidad, el aprendizaje y el futuro de la humanidad.</p>
             <button class="btn-start" onclick="changeSection('s1')">Iniciar Exploración</button>
         </section>
 
@@ -232,15 +264,15 @@
         <section id="s1">
             <div class="content-text">
                 <h2>LA ESENCIA DE LA IA</h2>
-                <p>La IA marca el fin de la programación determinista (donde los humanos escriben reglas rígidas). Su esencia reside en el <strong>entrenamiento heurístico</strong>: la capacidad de una máquina para construir su propio modelo de la realidad a través de la experiencia y la iteración matemática.</p>
+                <p>La IA marca el fin de la programación determinista. Su esencia reside en el <strong>entrenamiento heurístico</strong>: la capacidad de una máquina para construir su propio modelo de la realidad.</p>
                 
                 <div class="type-card">
                     <h3>Redes Neuronales Profundas</h3>
-                    <p>Arquitecturas inspiradas en el cerebro humano con múltiples "capas ocultas". Cada capa extrae características cada vez más complejas de los datos.</p>
+                    <p>Arquitecturas inspiradas en el cerebro humano con capas ocultas que extraen características complejas de los datos.</p>
                 </div>
                 <div class="type-card">
                     <h3>Retropropagación</h3>
-                    <p>El núcleo de su evolución. El sistema calcula su margen de error y ajusta los pesos de sus conexiones hacia atrás para no cometer el mismo error dos veces.</p>
+                    <p>Mecanismo donde el sistema calcula su error y ajusta sus conexiones para optimizar resultados futuros.</p>
                 </div>
             </div>
             <div class="img-slider" id="slider-s1">
@@ -253,15 +285,15 @@
         <section id="s2">
             <div class="content-text">
                 <h2>MECANISMOS DE COMPRENSIÓN</h2>
-                <p>¿Cómo entiende la máquina un mundo para el que no fue pre-programada? Lo hace traduciendo la realidad (texto, imágenes, sonido) a vectores matemáticos procesados por hardware masivamente paralelo.</p>
+                <p>La IA traduce la realidad a vectores matemáticos procesados por hardware masivamente paralelo para interpretar contexto y semántica.</p>
                 
                 <div class="type-card">
                     <h3>Modelos Transformers</h3>
-                    <p>Revolucionaron la IA mediante el mecanismo de "Atención". Evalúan el contexto de una oración o código simultáneamente, permitiendo una comprensión semántica profunda.</p>
+                    <p>Utilizan el mecanismo de "Atención" para evaluar el contexto global de la información de forma simultánea.</p>
                 </div>
                 <div class="type-card">
                     <h3>Visión Computacional</h3>
-                    <p>Mediante redes convolucionales (CNNs), la IA no solo "ve" una imagen, sino que segmenta, clasifica e interpreta el contexto tridimensional de su entorno.</p>
+                    <p>Interpretación de matrices numéricas (píxeles) para segmentar y clasificar el entorno tridimensional.</p>
                 </div>
             </div>
             <div class="img-slider" id="slider-s2">
@@ -274,15 +306,15 @@
         <section id="s3">
             <div class="content-text">
                 <h2>TAXONOMÍA DIGITAL</h2>
-                <p>La evolución de la Inteligencia Artificial no es lineal, se ramifica en distintas capacidades cognitivas. Clasificamos estos sistemas según su nivel de autonomía, creatividad y comprensión.</p>
+                <p>Clasificamos los sistemas de inteligencia según su nivel de autonomía, creatividad y capacidad de razonamiento general.</p>
                 
                 <div class="type-card">
-                    <h3>IA Generativa (ANI)</h3>
-                    <p>Altamente especializados en un dominio. Capaz de sintetizar texto, código e imágenes nuevas a partir de datos latentes y billones de parámetros.</p>
+                    <h3>IA Generativa</h3>
+                    <p>Modelos capaces de sintetizar contenido original (texto, imagen, audio) basándose en patrones latentes.</p>
                 </div>
                 <div class="type-card">
-                    <h3>Teoría de la Mente y AGI</h3>
-                    <p>Sistemas con capacidad de transferencia de conocimiento. Incluye máquinas teóricas que comprenden emociones, intenciones y dinámicas sociales humanas.</p>
+                    <h3>Teoría de la Mente</h3>
+                    <p>El horizonte de la IA: máquinas capaces de comprender intenciones y estados emocionales humanos.</p>
                 </div>
             </div>
             <div class="img-slider" id="slider-s3">
@@ -295,25 +327,20 @@
         <section id="s4">
             <div class="content-text">
                 <h2>LA IA EN EL AULA</h2>
-                <p>La integración de la Inteligencia Artificial en el ámbito escolar está marcando el fin del sistema educativo de talla única. Las herramientas digitales han pasado de ser simples calculadoras a convertirse en <strong>copilotos del aprendizaje</strong>.</p>
+                <p>La IA escolar está personalizando la educación, permitiendo que cada estudiante avance a su propio ritmo con asistencia inteligente.</p>
                 
                 <div class="type-card">
                     <h3>Tutores Personalizados</h3>
-                    <p>Los algoritmos analizan los tiempos de respuesta y errores del estudiante, adaptando la dificultad del material en tiempo real para mantenerlo en un estado óptimo de aprendizaje (Flow).</p>
+                    <p>Algoritmos que adaptan el contenido según el progreso individual del alumno.</p>
                 </div>
                 <div class="type-card">
-                    <h3>Automatización Administrativa</h3>
-                    <p>Sistemas que asisten a los docentes en la calificación de pruebas objetivas, organización de cronogramas y detección de plagio, permitiéndoles enfocar su tiempo en la interacción humana y la tutoría emocional.</p>
-                </div>
-                <div class="type-card">
-                    <h3>Evolución del Pensamiento Crítico</h3>
-                    <p>Al democratizar las respuestas (con asistentes como ChatGPT), el enfoque escolar se traslada de "memorizar la información" a "saber hacer las preguntas correctas" y evaluar la veracidad de las fuentes.</p>
+                    <h3>Apoyo Docente</h3>
+                    <p>Automatización de tareas administrativas para que el profesor se enfoque en la mentoría humana.</p>
                 </div>
             </div>
             <div class="static-img-container">
-                <!-- Enlace de imagen tal cual lo solicitaste -->
                 <a href="https://ibb.co/5gKQyn6F" target="_blank">
-                    <img src="https://i.ibb.co/67XKx1mB/Blog-ia-en-educacion-1024x994.jpg" alt="Blog-ia-en-educacion-1024x994" border="0">
+                    <img src="https://i.ibb.co/67XKx1mB/Blog-ia-en-educacion-1024x994.jpg" alt="IA Educación" border="0">
                 </a>
             </div>
         </section>
@@ -371,7 +398,7 @@
         }
         animate();
 
-        // --- Lógica del Slider de Imágenes (solo para contenedores con múltiples imágenes) ---
+        // --- Slider Logic ---
         function startSliders() {
             const sliders = document.querySelectorAll('.img-slider');
             sliders.forEach(slider => {
@@ -388,9 +415,9 @@
         }
         startSliders();
 
-        // --- Transición de Secciones ---
+        // --- Navigation ---
         let isAnimating = false;
-        async function changeSection(targetId) {
+        function changeSection(targetId) {
             if (isAnimating) return;
             const current = document.querySelector('section.show');
             const target = document.getElementById(targetId);
@@ -398,7 +425,8 @@
 
             isAnimating = true;
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-            document.getElementById('btn-' + targetId).classList.add('active');
+            const navBtn = document.getElementById('btn-' + targetId);
+            if(navBtn) navBtn.classList.add('active');
 
             current.style.transition = "all 0.4s ease";
             current.style.opacity = "0";
